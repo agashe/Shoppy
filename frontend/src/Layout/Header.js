@@ -4,10 +4,17 @@ import {
     Navbar,
     Form,
     Row,
-    Col
+    Col,
+    InputGroup,
+    Button
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBasketShopping, faCartShopping , faUser as faUserLoggedIn } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faBasketShopping,
+    faCartShopping,
+    faMagnifyingGlass,
+    faUser as faUserLoggedIn
+} from '@fortawesome/free-solid-svg-icons'
 import { faUser as faUserLoggedOut } from '@fortawesome/free-regular-svg-icons'
 
 export default function Header() {
@@ -27,14 +34,20 @@ export default function Header() {
                     <Form className="float-right">
                         <Row>
                             <Col xs="auto">
-                                <Form.Control type="text" placeholder="Search" className=" mr-sm-2" />
+                                <InputGroup>
+                                    <Form.Control type="text" placeholder="Search ..." className=" mr-sm-2" />
+                                    <Button variant="light" className="border-white">
+                                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                    </Button>
+                                </InputGroup>
                             </Col>
                         </Row>
                     </Form>
 
                     <Nav className="text-light mx-2">
-                        <Nav.Link href="#home" className="text-light">
+                        <Nav.Link href="#home" className="text-light position-relative">
                             <FontAwesomeIcon icon={faCartShopping} />
+                            <span className="cart-counter"></span>
                         </Nav.Link>
                         <Nav.Link href="#home" className="text-light">
                             <FontAwesomeIcon icon={faUserLoggedOut} />

@@ -2,3 +2,15 @@
     margin: 0;
     padding: 0;
 }
+
+.cart-counter {
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+}
