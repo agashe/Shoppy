@@ -1,6 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination';
 
-export default function ProductsPagination() {
+export default function ItemsPagination() {
     return (
         <Pagination className="mx-auto w-50">
             <Pagination.First />

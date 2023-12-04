@@ -1,7 +1,7 @@
 import { Row, Col } from 'react-bootstrap';
 import CategoriesList from "../../Components/CategoriesList";
 import ProductCard from "../../Components/ProductCard";
-import ProductsPagination from "../../Components/ProductsPagination";
+import ItemsPagination from "../../Components/ItemsPagination";
 
 export default function List() {
     return (
@@ -31,7 +31,7 @@ export default function List() {
 
                     <Row>
                         <Col>
-                            <ProductsPagination />
+                            <ItemsPagination />
                         </Col>
                     </Row>
                 </Col>

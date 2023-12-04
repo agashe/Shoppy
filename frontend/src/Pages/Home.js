@@ -1,7 +1,7 @@
 import { Col, Row, Carousel } from "react-bootstrap";
 import CategoriesList from "../Components/CategoriesList";
 import ProductCard from "../Components/ProductCard";
-import ProductsPagination from "../Components/ProductsPagination";
+import ItemsPagination from "../Components/ItemsPagination";
 
 export default function Home() {
     return (
@@ -46,7 +46,7 @@ export default function Home() {
 
                     <Row>
                         <Col>
-                            <ProductsPagination />
+                            <ItemsPagination />
                         </Col>
                     </Row>
                 </Col>

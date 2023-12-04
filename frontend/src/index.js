@@ -10,8 +10,12 @@ import Contact from './Pages/Contact';
 import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
 import Profile from './Pages/Auth/Profile';
-import List from './Pages/Products/List';
-import Show from './Pages/Products/Show';
+import ProductsList from './Pages/Products/List';
+import ShowProduct from './Pages/Products/Show';
+import OrdersList from './Pages/Orders/List';
+import ShowOrder from './Pages/Orders/Show';
+import Checkout from './Pages/Checkout';
+import Cart from './Pages/Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -28,8 +32,14 @@ root.render(
                     <Route path="/sign-in" element={<SignIn />} />
                     <Route path="/profile" element={<Profile />} />
 
-                    <Route path="/products" element={<List />} />
-                    <Route path="/product" element={<Show />} />
+                    <Route path="/products" element={<ProductsList />} />
+                    <Route path="/product" element={<ShowProduct />} />
+
+                    <Route path="/orders" element={<OrdersList />} />
+                    <Route path="/order" element={<ShowOrder />} />
+
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/cart" element={<Cart />} />
                 </Route>
             </Routes>
         </Router>
