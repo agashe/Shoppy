@@ -14,3 +14,16 @@
     background-color: red;
     color: white;
 }
+
+.screen-container {
+    height: 70vh;
+}
+
+textarea {
+    resize: none;
+}
+
+.product-image {
+    height: 400px;
+    width: 100%;
+}

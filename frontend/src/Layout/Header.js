@@ -27,15 +27,15 @@ export default function Header() {
                         <span className="d-inline-block ms-1">Shoppy</span>
                     </Navbar.Brand>
                     <Nav className="me-auto text-light">
-                        <Nav.Link href="#home" className="text-light">Home</Nav.Link>
-                        <Nav.Link href="#features" className="text-light">About</Nav.Link>
-                        <Nav.Link href="#pricing" className="text-light">Contact</Nav.Link>
+                        <Nav.Link href="/" className="text-light">Home</Nav.Link>
+                        <Nav.Link href="/about" className="text-light">About</Nav.Link>
+                        <Nav.Link href="/contact" className="text-light">Contact</Nav.Link>
                     </Nav>
                     <Form className="float-right">
                         <Row>
                             <Col xs="auto">
                                 <InputGroup>
-                                    <Form.Control type="text" placeholder="Search ..." className=" mr-sm-2" />
+                                    <Form.Control type="text" placeholder="Search ..." className="mr-2" />
                                     <Button variant="light" className="border-white">
                                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                                     </Button>
@@ -49,7 +49,7 @@ export default function Header() {
                             <FontAwesomeIcon icon={faCartShopping} />
                             <span className="cart-counter"></span>
                         </Nav.Link>
-                        <Nav.Link href="#home" className="text-light">
+                        <Nav.Link href="/sign-in" className="text-light">
                             <FontAwesomeIcon icon={faUserLoggedOut} />
                         </Nav.Link>
                     </Nav>
