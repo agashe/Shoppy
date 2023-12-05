@@ -13,7 +13,10 @@ import {
     faBasketShopping,
     faCartShopping,
     faMagnifyingGlass,
-    faUser as faUserLoggedIn
+    faList,
+    faRightFromBracket,
+    faUser as faUserLoggedIn,
+    faLongArrowAltDown
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser as faUserLoggedOut } from '@fortawesome/free-regular-svg-icons'
 
@@ -45,12 +48,18 @@ export default function Header() {
                     </Form>
 
                     <Nav className="text-light mx-2">
-                        <Nav.Link href="#home" className="text-light position-relative">
+                        <Nav.Link href="/cart" className="text-light position-relative">
                             <FontAwesomeIcon icon={faCartShopping} />
                             <span className="cart-counter"></span>
                         </Nav.Link>
                         <Nav.Link href="/sign-in" className="text-light">
                             <FontAwesomeIcon icon={faUserLoggedOut} />
+                        </Nav.Link>
+                        <Nav.Link href="/orders" className="text-light">
+                            <FontAwesomeIcon icon={faList} />
+                        </Nav.Link>
+                        <Nav.Link href="/sign-out" className="text-light">
+                            <FontAwesomeIcon icon={faRightFromBracket} />
                         </Nav.Link>
                     </Nav>
                 </Container>
