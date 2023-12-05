@@ -15,8 +15,7 @@ import {
     faMagnifyingGlass,
     faList,
     faRightFromBracket,
-    faUser as faUserLoggedIn,
-    faLongArrowAltDown
+    faUser as faUserLoggedIn
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser as faUserLoggedOut } from '@fortawesome/free-regular-svg-icons'
 
