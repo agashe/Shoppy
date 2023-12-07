@@ -9,6 +9,8 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
+    def orders_count(self):
+        return self.order_set.count()
     class Meta:
         db_table = "users"
 
@@ -18,6 +20,8 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
+    def products_count(self):
+        return self.product_set.count()
     class Meta:
         db_table = "categories"
         verbose_name_plural = "categories"
@@ -38,10 +42,11 @@ class Product(models.Model):
 
 class Order(models.Model):
     code = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     status = models.CharField(max_length=200)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     items_count = models.IntegerField()
-    shipped_at = models.DateTimeField()
+    shipped_at = models.DateTimeField(blank=True, null=True)
     items = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
