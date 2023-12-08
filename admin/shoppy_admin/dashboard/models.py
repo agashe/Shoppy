@@ -40,10 +40,17 @@ class Product(models.Model):
     class Meta:
         db_table = "products"
 
+order_statuses = (
+    ('pending', 'Pending'),
+    ('shipping', 'Shipping'),
+    ('done', 'Done'),
+    ('cancelled', 'Cancelled'),
+)
+
 class Order(models.Model):
     code = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
-    status = models.CharField(max_length=200)
+    status = models.CharField(max_length=200, choices=order_statuses, default=order_statuses[0][0])
     total = models.DecimalField(max_digits=10, decimal_places=2)
     items_count = models.IntegerField()
     shipped_at = models.DateTimeField(blank=True, null=True)

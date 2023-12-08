@@ -42,11 +42,44 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'code', 'user_link', '_total', 'items_count', '_status', 'shipped_at', 'created_at', 'action_buttons')
     list_filter = ['status', 'created_at']
     search_fields = ['code', 'user__name', 'user__email']
+    exclude = ['items']
+    readonly_fields = ['total', 'items_count', 'order_items']
 
+    def order_items(self, obj):
+        items = ''
+        index = 1
+
+        for item in obj.items:
+            product_link = reverse("admin:dashboard_product_change", args=(item['product_id'],))
+            
+            items += f'''
+                <tr>
+                    <td>{index}</td>
+                    <td><a href="{product_link}">{item['product_name']}</a></td>
+                    <td>${item['price']}</td>
+                    <td>{item['quantity']}</td>
+                </tr>
+            '''
+
+            index += 1
+
+        return mark_safe(f'''
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {items}
+            </table>
+        ''')
     def _total(self, obj):
         return f'${obj.total}'
     def _status(self, obj):
         return obj.status.title()
+    def _items(self, obj):
+        return 'test'
     def user_link(self, obj):
         return mark_safe('<a href="{}">{}</a>'.format(
             reverse("admin:dashboard_user_change", args=(obj.user.pk,)),
