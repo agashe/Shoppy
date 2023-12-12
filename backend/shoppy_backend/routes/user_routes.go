@@ -8,10 +8,8 @@ import (
 
 // Define User Routes
 func UserRoutes(app *fiber.App, prefix string) {
-	routes := app.Group(prefix)
+	routes := app.Group(prefix + "/users")
 
-	routes.Post("/sign-in", handlers.SignIn)
-	routes.Post("/sign-up", handlers.SignUp)
 	routes.Get("/profile", handlers.Profile)
 	routes.Put("/profile", handlers.UpdateProfile)
 }

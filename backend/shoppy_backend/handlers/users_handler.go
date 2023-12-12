@@ -5,30 +5,20 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 )
 
-// Define User Handlers
-func SignIn(context *fiber.Ctx) error {
-	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "User orders were loaded successfully !",
-		"data":    nil,
-	})
-}
-
-func SignUp(context *fiber.Ctx) error {
-	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "User's order was loaded successfully !",
-		"data":    nil,
-	})
-}
-
 func Profile(context *fiber.Ctx) error {
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	name := claims["name"].(string)
+
 	return context.JSON(fiber.Map{
 		"status":  true,
-		"message": "User's order was loaded successfully !",
-		"data":    nil,
+		"message": "User's profile was loaded successfully !",
+		"data": fiber.Map{
+			"user": name,
+		},
 	})
 }
 
