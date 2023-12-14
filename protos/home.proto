@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package shoppy_backend;
+option go_package = "./";
+
+/**
+ * Services
+ */
+service HomeOperations {
+  rpc FetchHomePage (FetchHomePageRequest) returns (FetchHomePageResponse) {}
+  rpc FetchAboutPage (FetchAboutPageRequest) returns (FetchAboutPageResponse) {}
+  rpc SendContactUsMessage (SendContactUsMessageRequest) returns (SendContactUsMessageResponse) {}
+}
+
+/**
+ * Data Objects
+ */
+message ProductData {
+  int32 id = 1;
+  string name = 2;
+  string image = 3;
+  float price = 4;
+  int32 stock = 5;
+  string description = 6;
+}
+
+message CategoryData {
+  int32 id = 1;
+  string name = 2;
+}
+
+message HomePageData {
+    repeated ProductData products = 1;
+    repeated CategoryData categories = 2;
+}
+
+/**
+ * Requests
+ */
+message FetchHomePageRequest {
+}
+
+message FetchAboutPageRequest {
+}
+
+message SendContactUsMessageRequest {
+  string name = 1;
+  string email = 2;
+  string body = 3;
+}
+
+/**
+ * Responses
+ */
+message FetchHomePageResponse {
+    bool status = 1;
+    string message = 2;
+    HomePageData data = 3;
+}
+
+message FetchAboutPageResponse {
+    bool status = 1;
+    string message = 2;
+    string data = 3;
+}
+
+message SendContactUsMessageResponse {
+    bool status = 1;
+    string message = 2;
+    string data = 3;
+}
