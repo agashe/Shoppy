@@ -1,17 +1,23 @@
-from django.contrib.auth.models import User
 from django_grpc_framework import generics
 from dashboard.api.home_pb2 import *
 from dashboard.models import *
+from dashboard.serializers import *
 
 
 class HomeService(generics.ModelService):
     def FetchHomePage(self, request, context):
+        latest_products = Product.objects.all().order_by('-created_at')
+        categories = Category.objects.all()
+
+        products_serializer = ProductProtoSerializer(latest_products, many=True)
+        categories_serializer = CategoryProtoSerializer(categories, many=True)
+
         return FetchHomePageResponse(
             status=True,
             message="Homepage's data was loaded successfully !",
             data=HomePageData(
-                products=[],
-                categories=[]
+                products=products_serializer.message,
+                categories=categories_serializer.message
             )
         )
 

@@ -1,4 +1,5 @@
 from django.db import models
+from dashboard.api.home_pb2 import *
 
 class User(models.Model):
     name = models.CharField(max_length=200)
