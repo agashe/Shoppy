@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package shoppy_backend;
+option go_package = "./";
+
+/**
+ * Services
+ */
+service UserOperations {
+  rpc GetUser (GetUserRequest) returns (GetUserResponse) {}
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {}
+}
+
+/**
+ * Data Objects
+ */
+message UserData {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string address = 4;
+  string password = 5;
+}
+
+/**
+ * Requests
+ */
+message GetUserRequest {
+  string email = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+  string address = 3;
+  string password = 4;
+}
+
+message UpdateUserRequest {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string address = 4;
+  string password = 5;
+}
+
+/**
+ * Responses
+ */
+message GetUserResponse {
+    bool status = 1;
+    string message = 2;
+    UserData data = 3;
+}
+
+message CreateUserResponse {
+    bool status = 1;
+    string message = 2;
+    UserData data = 3;
+}
+
+message UpdateUserResponse {
+    bool status = 1;
+    string message = 2;
+    UserData data = 3;
+}

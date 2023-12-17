@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package shoppy_backend;
+option go_package = "./";
+
+/**
+ * Services
+ */
+service ProductOperations {
+  rpc FetchProducts (FetchProductsRequest) returns (FetchProductsResponse) {}
+  rpc FetchProduct (FetchProductRequest) returns (FetchProductResponse) {}
+}
+
+/**
+ * Data Objects
+ */
+message ProductData {
+  int32 id = 1;
+  string name = 2;
+  string image = 3;
+  float price = 4;
+  int32 stock = 5;
+  string description = 6;
+}
+
+message CategoryData {
+  int32 id = 1;
+  string name = 2;
+}
+
+message ProductsPageData {
+  repeated ProductData products = 1;
+  repeated CategoryData categories = 2;
+}
+
+/**
+ * Requests
+ */
+message FetchProductsRequest {
+  string category_id = 2;
+  string search_keyword = 3;
+  int32 page = 4;
+}
+
+message FetchProductRequest {
+  int32 id = 1;
+}
+
+/**
+ * Responses
+ */
+message FetchProductsResponse {
+  bool status = 1;
+  string message = 2;
+  ProductsPageData data = 3;
+}
+
+message FetchProductResponse {
+  bool status = 1;
+  string message = 2;
+  ProductData data = 3;
+}

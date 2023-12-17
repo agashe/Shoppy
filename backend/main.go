@@ -43,7 +43,6 @@ func main() {
 	middlewares.AuthMiddleware(app)
 
 	// define private routes
-	routes.CartRoutes(app, prefix)
 	routes.OrderRoutes(app, prefix)
 	routes.UserRoutes(app, prefix)
 

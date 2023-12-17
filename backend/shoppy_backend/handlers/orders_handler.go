@@ -25,7 +25,7 @@ func ShowOrder(context *fiber.Ctx) error {
 }
 
 func CreateOrder(context *fiber.Ctx) error {
-	item := new(models.CartItem)
+	item := new(models.Order)
 
 	if err := context.BodyParser(item); err != nil {
 		return err
@@ -52,7 +52,7 @@ func CreateOrder(context *fiber.Ctx) error {
 }
 
 func CancelOrder(context *fiber.Ctx) error {
-	item := new(models.CartItemForDelete)
+	item := new(models.Order)
 
 	if err := context.BodyParser(item); err != nil {
 		return err

@@ -18,8 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings 
 from django.conf.urls.static import static 
-from dashboard.services import HomeService
+from dashboard.services import *
 from dashboard.api.home_pb2_grpc import *
+from dashboard.api.users_pb2_grpc import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,3 +31,4 @@ if settings.DEBUG:
 
 def grpc_handlers(server):
     add_HomeOperationsServicer_to_server(HomeService.as_servicer(), server)
+    add_UserOperationsServicer_to_server(UsersService.as_servicer(), server)

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"shoppy_backend/shoppy_backend/models"
+	"shoppy_backend/shoppy_backend/services"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -9,42 +10,54 @@ import (
 )
 
 func Profile(context *fiber.Ctx) error {
+	// get user's claims
 	user := context.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	name := claims["name"].(string)
+
+	// get user's profile
+	response := services.GetUser(claims["email"].(string))
 
 	return context.JSON(fiber.Map{
 		"status":  true,
 		"message": "User's profile was loaded successfully !",
 		"data": fiber.Map{
-			"user": name,
+			"id":      response.Data.GetId(),
+			"name":    response.Data.GetName(),
+			"email":   response.Data.GetEmail(),
+			"address": response.Data.GetAddress(),
 		},
 	})
 }
 
 func UpdateProfile(context *fiber.Ctx) error {
-	item := new(models.CartItem)
+	// serialize input
+	user := new(models.User)
 
-	if err := context.BodyParser(item); err != nil {
+	if err := context.BodyParser(user); err != nil {
 		return err
 	}
 
+	// validate
 	validate := validator.New(validator.WithRequiredStructEnabled())
-	err := validate.Struct(item)
+	err := validate.Struct(user)
 
 	if err != nil {
 		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"status":  false,
-			"message": "Invalid Cart Item",
+			"message": "Invalid user data",
 			"data":    err.Error(),
 		})
 	}
 
-	// ToDo : update the item
+	// save new password
 
+	// update user's profile
+	response := services.UpdateUser(*user)
+
+	// response
 	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "Cart was updated successfully !",
-		"data":    nil,
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
+		"data":    response.GetData(),
 	})
 }
