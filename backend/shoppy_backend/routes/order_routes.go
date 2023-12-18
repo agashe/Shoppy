@@ -13,5 +13,4 @@ func OrderRoutes(app *fiber.App, prefix string) {
 	routes.Get("/orders", handlers.ListOrders)
 	routes.Get("/orders/:id", handlers.ShowOrder)
 	routes.Post("/orders", handlers.CreateOrder)
-	routes.Put("/orders", handlers.CancelOrder)
 }

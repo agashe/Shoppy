@@ -8,7 +8,7 @@ import (
 )
 
 func Products(context *fiber.Ctx) error {
-	page := 0
+	page := 1
 
 	if context.Params("page") != "nil" {
 		page, _ = strconv.Atoi(context.Params("page"))

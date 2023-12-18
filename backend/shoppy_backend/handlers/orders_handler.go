@@ -1,79 +1,64 @@
 package handlers
 
 import (
-	"shoppy_backend/shoppy_backend/models"
+	"shoppy_backend/shoppy_backend/services"
+	"strconv"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 // Define Order Handlers
 func ListOrders(context *fiber.Ctx) error {
+	// get user's claims
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+
+	// get user's orders
+	response := services.FetchOrders(int32(claims["id"].(float64)), 1)
+
+	// response
 	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "User orders were loaded successfully !",
-		"data":    nil,
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
+		"data":    response.GetData(),
 	})
 }
 
 func ShowOrder(context *fiber.Ctx) error {
+	// get user's claims
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+
+	// get user's order
+	orderId := 0
+
+	if context.Params("order_id") != "nil" {
+		orderId, _ = strconv.Atoi(context.Params("id"))
+	}
+
+	response := services.FetchOrder(int32(claims["id"].(float64)), int32(orderId))
+
+	// response
 	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "User's order was loaded successfully !",
-		"data":    nil,
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
+		"data":    response.GetData(),
 	})
 }
 
 func CreateOrder(context *fiber.Ctx) error {
-	item := new(models.Order)
+	// get user's claims
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
 
-	if err := context.BodyParser(item); err != nil {
-		return err
-	}
+	// create user's order
+	response := services.CreateOrder(int32(claims["id"].(float64)), string(context.Body()))
 
-	validate := validator.New(validator.WithRequiredStructEnabled())
-	err := validate.Struct(item)
-
-	if err != nil {
-		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"status":  false,
-			"message": "Invalid Cart Item",
-			"data":    err.Error(),
-		})
-	}
-
-	// ToDo : update the item
-
+	// response
 	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "Cart was updated successfully !",
-		"data":    nil,
-	})
-}
-
-func CancelOrder(context *fiber.Ctx) error {
-	item := new(models.Order)
-
-	if err := context.BodyParser(item); err != nil {
-		return err
-	}
-
-	validate := validator.New(validator.WithRequiredStructEnabled())
-	err := validate.Struct(item)
-
-	if err != nil {
-		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"status":  false,
-			"message": "Invalid Cart Item",
-			"data":    err.Error(),
-		})
-	}
-
-	// ToDo : delete the item
-
-	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "Cart Item was deleted successfully !",
-		"data":    nil,
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
+		"data":    response.GetData(),
 	})
 }

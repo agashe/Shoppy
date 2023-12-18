@@ -2,6 +2,7 @@ from django_grpc_framework import proto_serializers
 from dashboard.api.home_pb2 import *
 from dashboard.api.users_pb2 import *
 from dashboard.api.products_pb2 import *
+from dashboard.api.orders_pb2 import *
 from dashboard.models import *
 
 
@@ -34,3 +35,9 @@ class CategorySerializer(proto_serializers.ModelProtoSerializer):
         model = Category
         proto_class = CategoryEntity
         fields = ['id', 'name']
+
+class OrderProtoSerializer(proto_serializers.ModelProtoSerializer):
+    class Meta:
+        model = Order
+        proto_class = OrderData
+        fields = ['id', 'code', 'total', 'items_count', 'status', 'shipped_at', 'created_at', 'items']

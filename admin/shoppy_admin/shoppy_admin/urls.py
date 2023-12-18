@@ -22,6 +22,7 @@ from dashboard.services import *
 from dashboard.api.home_pb2_grpc import *
 from dashboard.api.users_pb2_grpc import *
 from dashboard.api.products_pb2_grpc import *
+from dashboard.api.orders_pb2_grpc import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,3 +35,4 @@ def grpc_handlers(server):
     add_HomeOperationsServicer_to_server(HomeService.as_servicer(), server)
     add_UserOperationsServicer_to_server(UsersService.as_servicer(), server)
     add_ProductOperationsServicer_to_server(ProductsService.as_servicer(), server)
+    add_OrdersOperationsServicer_to_server(OrdersService.as_servicer(), server)

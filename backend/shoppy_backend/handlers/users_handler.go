@@ -18,8 +18,8 @@ func Profile(context *fiber.Ctx) error {
 	response := services.GetUser(claims["email"].(string))
 
 	return context.JSON(fiber.Map{
-		"status":  true,
-		"message": "User's profile was loaded successfully !",
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
 		"data": fiber.Map{
 			"id":      response.Data.GetId(),
 			"name":    response.Data.GetName(),

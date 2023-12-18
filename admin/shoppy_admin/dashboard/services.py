@@ -6,6 +6,7 @@ from dashboard.models import *
 from dashboard.serializers import *
 import urllib.parse
 import math
+import json
 
 
 class HomeService(generics.ModelService):
@@ -130,4 +131,59 @@ class ProductsService(generics.ModelService):
             status=True,
             message="Product's data was loaded successfully !",
             data=products_serializer.message
+        )
+
+class OrdersService(generics.ModelService):
+    def FetchOrders(self, request, context):
+        pages = 1
+        per_page = 10
+        
+        orders = Order.objects.filter(user__pk=request.user_id)
+        orders_serializer = OrderProtoSerializer(orders, many=True)
+
+        if len(orders) > per_page:
+            pages = (math.ceil(len(orders) / per_page))
+
+        return FetchOrdersResponse(
+            status=True,
+            message="Orders list was loaded successfully !",
+            data=OrdersPageData(
+                orders=orders_serializer.message,
+                pages=pages
+            )
+        )
+
+    def FetchOrder(self, request, context):
+        order = Order.objects.get(user__pk=request.user_id, pk=request.order_id)
+        orders_serializer = OrderProtoSerializer(order)
+
+        return FetchOrderResponse(
+            status=True,
+            message="Order was created successfully !",
+            data=orders_serializer.message
+        )
+
+    def CreateOrder(self, request, context):
+        items = json.loads(request.items)
+
+        total = 0
+        for item in items:
+            total += float(item['price'])
+        
+        user = User.objects.get(pk=request.user_id)
+
+        order = Order.objects.create(
+            code="",
+            user=user,
+            total = total,
+            items_count = len(items),
+            items = request.items
+        )
+        
+        orders_serializer = OrderProtoSerializer(order)
+
+        return CreateOrderResponse(
+            status=True,
+            message="Order was created successfully !",
+            data=orders_serializer.message
         )
