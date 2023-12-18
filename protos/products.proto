@@ -14,7 +14,7 @@ service ProductOperations {
 /**
  * Data Objects
  */
-message ProductData {
+message ProductEntity {
   int32 id = 1;
   string name = 2;
   string image = 3;
@@ -23,21 +23,22 @@ message ProductData {
   string description = 6;
 }
 
-message CategoryData {
+message CategoryEntity {
   int32 id = 1;
   string name = 2;
 }
 
 message ProductsPageData {
-  repeated ProductData products = 1;
-  repeated CategoryData categories = 2;
+  repeated ProductEntity products = 1;
+  repeated CategoryEntity categories = 2;
+  int32 pages = 3;
 }
 
 /**
  * Requests
  */
 message FetchProductsRequest {
-  string category_id = 2;
+  int32 category_id = 2;
   string search_keyword = 3;
   int32 page = 4;
 }
@@ -58,5 +59,5 @@ message FetchProductsResponse {
 message FetchProductResponse {
   bool status = 1;
   string message = 2;
-  ProductData data = 3;
+  ProductEntity data = 3;
 }
