@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe 
 from .models import User, Category, Product, Order, Message
+import json
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'products_count', 'created_at', 'action_buttons')
@@ -46,10 +47,12 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ['total', 'items_count', 'order_items']
 
     def order_items(self, obj):
-        items = ''
+        order_items = json.loads(obj.items)
+        items = ""
         index = 1
 
-        for item in obj.items:
+        for item in order_items:
+            print(item['product_name'])
             product_link = reverse("admin:dashboard_product_change", args=(item['product_id'],))
             
             items += f'''

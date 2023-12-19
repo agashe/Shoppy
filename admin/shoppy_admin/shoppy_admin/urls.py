@@ -24,6 +24,11 @@ from dashboard.api.users_pb2_grpc import *
 from dashboard.api.products_pb2_grpc import *
 from dashboard.api.orders_pb2_grpc import *
 
+
+admin.site.site_header = 'Shoppy Admin Panel'       
+admin.site.index_title = 'Dashboard'
+admin.site.site_title = 'Shoppy Admin'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]

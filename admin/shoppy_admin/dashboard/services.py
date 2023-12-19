@@ -7,6 +7,8 @@ from dashboard.serializers import *
 import urllib.parse
 import math
 import json
+import random
+import string
 
 
 class HomeService(generics.ModelService):
@@ -177,8 +179,8 @@ class OrdersService(generics.ModelService):
         user = User.objects.get(pk=request.user_id)
 
         order = Order.objects.create(
-            code="",
-            user=user,
+            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6)),
+            user = user,
             total = total,
             items_count = len(items),
             items = request.items
