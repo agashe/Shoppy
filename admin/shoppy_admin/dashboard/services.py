@@ -105,11 +105,11 @@ class ProductsService(generics.ModelService):
         per_page = 12
 
         if request.category_id != 0:            
-            products = Product.objects.filter(category__pk=request.category_id)
+            products = Product.objects.filter(category__pk=request.category_id)[request.page:request.page+per_page]
         elif request.search_keyword != '':
-            products = Product.objects.all().filter(name__icontains=urllib.parse.unquote(request.search_keyword))
+            products = Product.objects.all().filter(name__icontains=urllib.parse.unquote(request.search_keyword))[request.page:request.page+per_page]
         else:
-            products = Product.objects.all()
+            products = Product.objects.all()[request.page:request.page+per_page]
 
         categories = Category.objects.all()
 
@@ -144,7 +144,7 @@ class OrdersService(generics.ModelService):
         pages = 1
         per_page = 10
         
-        orders = Order.objects.filter(user__pk=request.user_id)
+        orders = Order.objects.filter(user__pk=request.user_id)[request.page:request.page+per_page]
         orders_serializer = OrderProtoSerializer(orders, many=True)
 
         if len(orders) > per_page:
