@@ -48,7 +48,11 @@ class HomeService(generics.ModelService):
 
 class UsersService(generics.ModelService):
     def GetUser(self, request, context):
-        user = User.objects.get(email=request.email)
+        try:
+            user = User.objects.get(email=request.email)
+        except User.DoesNotExist:
+            user = None
+        
         users_serializer = UserProtoSerializer(user)
 
         return GetUserResponse(

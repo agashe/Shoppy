@@ -98,6 +98,15 @@ func SignUp(context *fiber.Ctx) error {
 	}
 
 	// handle user already exists case
+	userAlreadyExists := services.GetUser(user.Email)
+
+	if userAlreadyExists.Data.Id != 0 {
+		return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status":  false,
+			"message": "This email address is already connected to account",
+			"data":    "",
+		})
+	}
 
 	// encrypt user's password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)

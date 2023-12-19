@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Profile(context *fiber.Ctx) error {
@@ -50,6 +51,43 @@ func UpdateProfile(context *fiber.Ctx) error {
 	}
 
 	// save new password
+	if user.Password != "" {
+		if user.Current == "" {
+			return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"status":  false,
+				"message": "Invalid current password !",
+				"data":    "",
+			})
+		}
+
+		// get user's claims
+		userProfile := context.Locals("user").(*jwt.Token)
+		claims := userProfile.Claims.(jwt.MapClaims)
+		response := services.GetUser(claims["email"].(string))
+
+		// validate user credentials
+		check := bcrypt.CompareHashAndPassword([]byte(response.Data.GetPassword()), []byte(user.Current))
+
+		if check != nil {
+			return context.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"status":  false,
+				"message": "Invalid current password !",
+				"data":    nil,
+			})
+		}
+
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+
+		if err != nil {
+			return context.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"status":  false,
+				"message": "Error : can't generate secure password",
+				"data":    err.Error(),
+			})
+		}
+
+		user.Password = string(hashedPassword)
+	}
 
 	// update user's profile
 	response := services.UpdateUser(*user)
