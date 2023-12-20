@@ -1,30 +1,25 @@
 import { Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { default as axios } from 'axios';
+import parse from 'html-react-parser'
 
 export default function About() {
+    const [aboutContent, setAboutContent] = useState(null);
+
+    useEffect(function() {
+        axios.get('http://localhost:5000/api/v1/about', { crossDomain: true })
+            .then(function (response) {
+                setAboutContent(parse(response.data.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+
     return (
         <Row>
             <Col md="8" className="mx-auto screen-container">
-                <h3 class="mb-5 text-center">About Shoppy</h3>
-                
-                <article>
-                    Shoppy is a small e-commerce application , with basic functionality including ,
-                    register/login , categories , products search , cart operations , checkout and orders detail page.
-                    the application was built using React on the front side, Fiber for the backend APIs
-                    , Django for the dashboard.
-                </article>
-
-                <br />
-
-                <article>
-                    A SQLite3 database is used for storing the data , this could be replaced with any other SQL
-                    database of your choice like MySQL , PostgreSQL or MSSQL.
-                </article>
-
-                <br />
-
-                <article>
-                    For the installation instructions , check please the Github repo.
-                </article>
+                {aboutContent}
             </Col>
         </Row>
     );

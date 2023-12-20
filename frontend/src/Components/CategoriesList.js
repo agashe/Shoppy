@@ -1,17 +1,18 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 
-export default function CategoriesList() {
+export default function CategoriesList({ categories }) {
     return (
         <ListGroup defaultActiveKey="#link1">
-            <ListGroup.Item action href="#link1">
-                Link 1
-            </ListGroup.Item>
-            <ListGroup.Item action href="#link2" disabled>
-                Link 2
-            </ListGroup.Item>
-            <ListGroup.Item action>
-                This one is a button
-            </ListGroup.Item>
+            {
+                categories ?
+                categories.map((category) => {
+                    return (
+                        <ListGroup.Item key={category.id} action href="/products">
+                            {category.name}
+                        </ListGroup.Item>
+                    );
+                }) : null
+            }
         </ListGroup>
     );
 }

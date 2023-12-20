@@ -16,8 +16,12 @@ import OrdersList from './Pages/Orders/List';
 import ShowOrder from './Pages/Orders/Show';
 import Checkout from './Pages/Checkout';
 import Cart from './Pages/Cart';
+import { default as axios } from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// set base url
+axios.defaults.baseURL = 'http://localhost:5000/api/v1/';
 
 root.render(
     <React.StrictMode>

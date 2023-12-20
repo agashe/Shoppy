@@ -1,9 +1,23 @@
 import { Col, Row, Carousel } from "react-bootstrap";
 import CategoriesList from "../Components/CategoriesList";
 import ProductCard from "../Components/ProductCard";
-import ItemsPagination from "../Components/ItemsPagination";
+import { useState, useEffect } from 'react';
+import { default as axios } from 'axios';
 
 export default function Home() {
+    const [homeContent, setHomeContent] = useState([]);
+
+    useEffect(function() {
+        axios.get('http://localhost:5000/api/v1/', { crossDomain: true })
+            .then(function (response) {
+                console.log(homeContent)
+                setHomeContent(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    })
+
     return (
         <>
             <Row className="mb-4">
@@ -22,34 +36,28 @@ export default function Home() {
                 </Col>
             </Row>
             <Row>
-                <Col md="3">
-                    <CategoriesList />
-                </Col>
-                <Col md="9">
-                    {
-                        [1, 2, 3, 4, 5].map((row, i) => {
-                            return (
-                                <Row key={i} className="mb-4">
-                                    <Col md="4">
-                                        <ProductCard />
-                                    </Col>
-                                    <Col md="4">
-                                        <ProductCard />
-                                    </Col>
-                                    <Col md="4">
-                                        <ProductCard />
-                                    </Col>
-                                </Row>
-                            )
-                        })
-                    }
-
-                    <Row>
-                        <Col>
-                            <ItemsPagination />
+                {
+                    homeContent &&
+                    <>
+                        <Col md="3">
+                            <CategoriesList categories={homeContent.categories}/>
                         </Col>
-                    </Row>
-                </Col>
+                        <Col md="9">
+                            <Row className="mb-4">
+                            {
+                                homeContent.products &&
+                                homeContent.products.map((product, i) => {
+                                    return (
+                                        <Col md="4">
+                                            <ProductCard product={product} key={i} />
+                                        </Col>
+                                    )
+                                })
+                            }
+                            </Row>
+                        </Col>
+                    </>
+                }
             </Row>
         </>
     );

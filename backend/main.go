@@ -7,6 +7,7 @@ import (
 	"shoppy_backend/shoppy_backend/routes"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"github.com/qinains/fastergoding"
 )
@@ -33,6 +34,9 @@ func main() {
 
 	// create new app instance
 	app := fiber.New()
+
+	// CORS
+	app.Use(cors.New())
 
 	// define public routes
 	routes.HomeRoutes(app, prefix)
