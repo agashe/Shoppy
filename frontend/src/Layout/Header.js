@@ -18,8 +18,25 @@ import {
     faUser as faUserLoggedIn
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser as faUserLoggedOut } from '@fortawesome/free-regular-svg-icons'
+import { useState, useRef } from 'react';
+import { default as axios } from 'axios';
 
 export default function Header() {
+    const keywordInput = useRef();
+
+    function search(e) {
+        e.preventDefault();
+
+        window.location.href = "/products/s/" + keywordInput.current.value;
+    }
+
+    function handleKeyboardSearch(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            window.location.href = "/products/s/" + keywordInput.current.value;
+        }
+    }
+
     return (
         <header>
             <Navbar bg="primary" className="justify-content-center">
@@ -37,8 +54,8 @@ export default function Header() {
                         <Row>
                             <Col xs="auto">
                                 <InputGroup>
-                                    <Form.Control type="text" placeholder="Search ..." className="mr-2" />
-                                    <Button variant="light" className="border-white">
+                                    <Form.Control type="text" placeholder="Search ..." className="mr-2" ref={keywordInput} id="search-box" onKeyDown={handleKeyboardSearch} />
+                                    <Button variant="light" className="border-white" onClick={search}>
                                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                                     </Button>
                                 </InputGroup>

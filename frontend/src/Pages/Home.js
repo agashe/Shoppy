@@ -8,15 +8,14 @@ export default function Home() {
     const [homeContent, setHomeContent] = useState([]);
 
     useEffect(function() {
-        axios.get('http://localhost:5000/api/v1/', { crossDomain: true })
+        axios.get('/', { crossDomain: true })
             .then(function (response) {
-                console.log(homeContent)
                 setHomeContent(response.data.data);
             })
             .catch(function (error) {
                 console.log(error);
             });
-    })
+    }, [])
 
     return (
         <>
@@ -48,8 +47,8 @@ export default function Home() {
                                 homeContent.products &&
                                 homeContent.products.map((product, i) => {
                                     return (
-                                        <Col md="4">
-                                            <ProductCard product={product} key={i} />
+                                        <Col md="4" key={i}>
+                                            <ProductCard product={product} />
                                         </Col>
                                     )
                                 })

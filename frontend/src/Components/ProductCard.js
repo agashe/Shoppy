@@ -9,7 +9,8 @@ export default function ProductCard({ product }) {
                 product ?
                 (
                     <Card>
-                        <a href="/product" class="text-decoration-none">
+                        <a href={`/product/${product.id}/${product.name.replaceAll(' ', '+')}`} 
+                            className="text-decoration-none">
                             <Card.Img variant="top" className="product-card-image" src={product.image ? 
                                 (mediaURL + product.image): 'images/placeholder.png'} />
                             <Card.Body>

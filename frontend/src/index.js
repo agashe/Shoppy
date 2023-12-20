@@ -21,7 +21,7 @@ import { default as axios } from 'axios';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // set base url
-axios.defaults.baseURL = 'http://localhost:5000/api/v1/';
+axios.defaults.baseURL = 'http://localhost:5000/api/v1';
 
 root.render(
     <React.StrictMode>
@@ -36,8 +36,8 @@ root.render(
                     <Route path="/sign-in" element={<SignIn />} />
                     <Route path="/profile" element={<Profile />} />
 
-                    <Route path="/products" element={<ProductsList />} />
-                    <Route path="/product" element={<ShowProduct />} />
+                    <Route path="/products/:op/:arg/:slug?" element={<ProductsList />} />
+                    <Route path="/product/:id/:slug?" element={<ShowProduct />} />
 
                     <Route path="/orders" element={<OrdersList />} />
                     <Route path="/order" element={<ShowOrder />} />

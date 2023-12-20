@@ -2,38 +2,68 @@ import { Row, Col } from 'react-bootstrap';
 import CategoriesList from "../../Components/CategoriesList";
 import ProductCard from "../../Components/ProductCard";
 import ItemsPagination from "../../Components/ItemsPagination";
+import { useState, useEffect } from 'react';
+import { default as axios } from 'axios';
+import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 export default function List() {
+    const [productsPageContent, setProductsPageContent] = useState([]);
+    let [searchParams, setSearchParams] = useSearchParams();
+    const { op, arg, slug } = useParams();
+    let currentPage = searchParams.get('page') ?? 1;
+
+    useEffect(function() {
+        axios.get(`/products/${op}/${arg}/${slug}?page=${currentPage}`, { crossDomain: true })
+            .then(function (response) {
+                setProductsPageContent(response.data.data);
+
+                // add search keyword
+                if (op == 's') {
+                    document.getElementById('search-box').value = arg;
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+
     return (
         <>
             <Row>
                 <Col md="3">
-                    <CategoriesList />
+                    <CategoriesList categories={productsPageContent.categories} activeCategory={op == 'c' ? arg : ''} />
                 </Col>
                 <Col md="9">
                     {
-                        [1, 2, 3, 4, 5].map((row, i) => {
-                            return (
-                                <Row key={i} className="mb-4">
-                                    <Col md="4">
-                                        <ProductCard />
+                        productsPageContent &&
+                        <>
+                            <Row className="screen-container">
+                                {
+                                    productsPageContent.products ?
+                                    productsPageContent.products.map((product, i) => {
+                                        return (
+                                            <Col md="4" key={i}>
+                                                <ProductCard product={product} />
+                                            </Col>
+                                        )
+                                    }) :
+                                    <Col>
+                                        <h3>Sorry, no results !</h3>
                                     </Col>
-                                    <Col md="4">
-                                        <ProductCard />
-                                    </Col>
-                                    <Col md="4">
-                                        <ProductCard />
-                                    </Col>
-                                </Row>
-                            )
-                        })
+                                }
+                            </Row>
+                        </>
                     }
 
-                    <Row>
-                        <Col>
-                            <ItemsPagination />
-                        </Col>
-                    </Row>
+                    {
+                        productsPageContent.products &&
+                        <Row>
+                            <Col>
+                                <ItemsPagination url={`/products/${op}/${arg}/${slug}`} pages={[1]} currentPage={1} />
+                            </Col>
+                        </Row>
+                    }
                 </Col>
             </Row>
         </>

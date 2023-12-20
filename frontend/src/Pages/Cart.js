@@ -4,8 +4,8 @@ import { faEye, faTrashCan, faCheckCircle } from '@fortawesome/free-regular-svg-
 
 export default function Cart() {
     return (
-        <div class="screen-container">
-            <h3 class="mb-3 text-center">My Cart</h3>
+        <div className="screen-container">
+            <h3 className="mb-3 text-center">My Cart</h3>
 
             <Row className="mt-5">
                 <Col md="9" className="mx-auto">
@@ -24,8 +24,8 @@ export default function Cart() {
                                 [1, 2, 3, 4, 5, 7, 8, 9, 10].map((row, i) => {
                                     return (
                                         <tr key={i}>
-                                            <td style={{ width: '50px' }} class="align-middle">{i + 1}</td>
-                                            <td style={{ width: '350px' }} class="align-middle">
+                                            <td style={{ width: '50px' }} className="align-middle">{i + 1}</td>
+                                            <td style={{ width: '350px' }} className="align-middle">
                                                 <Row>
                                                     <Col md="3">
                                                         <img src="images/placeholder.png" style={{ width: '50px', height: '50px' }} />
@@ -37,8 +37,8 @@ export default function Cart() {
                                                     </Col>
                                                 </Row>
                                             </td>
-                                            <td style={{ width: '100px' }} class="align-middle">$50</td>
-                                            <td class="align-middle">
+                                            <td style={{ width: '100px' }} className="align-middle">$50</td>
+                                            <td className="align-middle">
                                                 <Form>
                                                     <Row>
                                                         <Col xs="auto">
@@ -54,7 +54,7 @@ export default function Cart() {
                                                     </Row>
                                                 </Form>
                                             </td>
-                                            <td class="align-middle">
+                                            <td className="align-middle">
                                                 <Button variant="primary" className="me-2">
                                                     <FontAwesomeIcon icon={faEye} />
                                                 </Button>

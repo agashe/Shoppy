@@ -1,18 +1,33 @@
 import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { default as axios } from 'axios';
+import { useParams } from 'react-router';
 
 export default function Show() {
+    const mediaURL = 'http://localhost:8000';
+    const [productPageContent, setProductPageContent] = useState([]);
+    const { id, slug } = useParams();
+    
+    useEffect(function() {
+        axios.get(`/products/p/${id}/${slug}`, { crossDomain: true })
+            .then(function (response) {
+                setProductPageContent(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+
     return (
         <Row className="screen-container">
             <Col md="6">
-                <img src="images/placeholder.png" class="product-image" />
+                <img src={productPageContent.image ? (mediaURL + productPageContent.image): 'images/placeholder.png'} className="product-image" />
             </Col>
             <Col md="6">
-                <h3>Product name goes here</h3>
-                <p class="fs-3 font-weight-bold text-danger">$10.50</p>
+                <h3>{productPageContent.name}</h3>
+                <p className="fs-3 font-weight-bold text-danger">{'$' + productPageContent.price}</p>
                 <article>
-                    This product description goes here , This product description goes here
-                    This product description goes here , This product description goes here
-                    This product description goes here, This product description goes here
+                    {productPageContent.description}
                 </article>
 
                 <Form>

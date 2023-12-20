@@ -14,7 +14,7 @@ export default function About() {
             .catch(function (error) {
                 console.log(error);
             });
-    })
+    }, [])
 
     return (
         <Row>

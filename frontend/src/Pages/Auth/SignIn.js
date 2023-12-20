@@ -4,7 +4,7 @@ export default function SignIn() {
     return (
         <Row>
             <Col md="4" className="mx-auto screen-container">
-                <h3 class="mb-1 text-center">Sign In</h3>
+                <h3 className="mb-1 text-center">Sign In</h3>
 
                 <Card className="mt-5">
                     <Card.Body>
@@ -19,7 +19,7 @@ export default function SignIn() {
                                 <Form.Control type="password" placeholder="Enter password" />
                             </Form.Group>
 
-                            <a href="/sign-up" class="d-block link-primary link-underline-primary mt-5 mb-4 fs-6">
+                            <a href="/sign-up" className="d-block link-primary link-underline-primary mt-5 mb-4 fs-6">
                                 Don't have account yet , register !
                             </a>
 

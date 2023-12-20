@@ -1,5 +1,5 @@
 import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { default as axios } from 'axios';
 
 export default function Contact() {

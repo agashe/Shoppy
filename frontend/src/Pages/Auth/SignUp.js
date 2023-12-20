@@ -4,8 +4,8 @@ export default function SignUp() {
     return (
         <Row>
             <Col md="8" className="mx-auto screen-container">
-                <h3 class="text-center mb-1">Sign Up</h3>
-                <p class="text-center">Fill the form below , to register a new account</p>
+                <h3 className="text-center mb-1">Sign Up</h3>
+                <p className="text-center">Fill the form below , to register a new account</p>
 
                 <Card className="mt-5">
                     <Card.Body>

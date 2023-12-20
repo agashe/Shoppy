@@ -4,8 +4,8 @@ export default function SignUp() {
     return (
         <Row>
             <Col md="8" className="mx-auto screen-container">
-                <h3 class="text-center mb-1">Profile</h3>
-                <p class="text-center">You can update your information and reset your password , using the form below</p>
+                <h3 className="text-center mb-1">Profile</h3>
+                <p className="text-center">You can update your information and reset your password , using the form below</p>
 
                 <Card className="mt-5">
                     <Card.Body>
@@ -26,7 +26,7 @@ export default function SignUp() {
                                 <Form.Control type="text" placeholder="Enter address" value="5000st Test , Test City" />
                             </Form.Group>
 
-                            <hr class="my-4" />
+                            <hr className="my-4" />
 
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridPassword">
