@@ -1,22 +1,66 @@
-import { Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { default as axios } from 'axios';
+import { useState, useRef } from 'react';
 
 export default function SignIn() {
+    const emailInput = useRef();
+    const passwordInput = useRef();
+    const [validated, setValidated] = useState(false);
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
+    const [show, setShow] = useState(true);
+    
+    function submitSignInForm(e) {
+        const form = e.currentTarget;
+
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+            setValidated(true);
+            return;
+        }
+
+        e.preventDefault();
+
+        axios.post('/auth/sign-in', {
+                email: emailInput.current.value,
+                password: passwordInput.current.value,
+            },  { crossDomain: true })
+            .then(function (response) {
+                localStorage.setItem('user', JSON.stringify(response.data.data));
+                window.location.href = '/';
+            })
+            .catch(function (error) {
+                // we can add some logging mechanism to report the error
+
+                setMessage(error.response.data.message);
+                setMessageType('danger');
+            });
+    }
+
     return (
         <Row>
             <Col md="4" className="mx-auto screen-container">
-                <h3 className="mb-1 text-center">Sign In</h3>
+                <h3 className="mb-2 text-center">Sign In</h3>
+
+                {
+                    message &&
+                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                        {message}
+                    </Alert>
+                }
 
                 <Card className="mt-5">
                     <Card.Body>
-                        <Form>
+                        <Form noValidate validated={validated} onSubmit={submitSignInForm}>
                             <Form.Group controlId="formGridEmail" className="mb-4">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
+                                <Form.Control type="email" placeholder="Enter email" ref={emailInput} required />
                             </Form.Group>
 
                             <Form.Group controlId="formGridPassword" className="my-4">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter password" />
+                                <Form.Control type="password" placeholder="Enter password" ref={passwordInput} required />
                             </Form.Group>
 
                             <a href="/sign-up" className="d-block link-primary link-underline-primary mt-5 mb-4 fs-6">

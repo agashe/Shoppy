@@ -16,6 +16,7 @@ import OrdersList from './Pages/Orders/List';
 import ShowOrder from './Pages/Orders/Show';
 import Checkout from './Pages/Checkout';
 import Cart from './Pages/Cart';
+import PageNotFound from './Pages/Errors/PageNotFound';
 import { default as axios } from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -44,6 +45,7 @@ root.render(
 
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>
         </Router>

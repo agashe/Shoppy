@@ -8,18 +8,30 @@ export default function Contact() {
     const bodyInput = useRef();
 
     const [show, setShow] = useState(true);
-    const [successMessage, setSuccessMessage] = useState(null);
+    const [validated, setValidated] = useState(false);
+    const [message, setMessage] = useState(null);
+    const [messageType, setMessageType] = useState(null);
 
     function submitContactUsForm(e) {
+        const form = e.currentTarget;
+
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+            setValidated(true);
+            return;
+        }
+
         e.preventDefault();
 
-        axios.post('http://localhost:5000/api/v1/contact', {
+        axios.post('/contact', {
                 name: nameInput.current.value,
                 email: emailInput.current.value,
                 body: bodyInput.current.value
-            },  { crossDomain: true })
+            },  { crossDomain: true, headers: { }})
             .then(function (response) {
-                setSuccessMessage(response.data.message);
+                setMessage(response.data.message);
+                setMessageType('success');
 
                 // reset form
                 nameInput.current.value = ""
@@ -27,7 +39,11 @@ export default function Contact() {
                 bodyInput.current.value = ""
             })
             .catch(function (error) {
-                console.log(error);
+                // we can add some logging mechanism to report the error
+
+                // show error message
+                setMessage(error.response.data.message);
+                setMessageType('danger');
             });
     }
     
@@ -38,15 +54,15 @@ export default function Contact() {
                 <p>Feel free to send us your message</p>
 
                 {
-                    successMessage &&
-                    <Alert variant={"success"} onClose={() => setShow(false)} dismissible>
-                        {successMessage}
+                    message &&
+                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                        {message}
                     </Alert>
                 }
 
                 <Card className="mt-5">
                     <Card.Body>
-                        <Form>
+                        <Form noValidate validated={validated} onSubmit={submitContactUsForm}>
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridName">
                                     <Form.Label>Name</Form.Label>
@@ -63,7 +79,7 @@ export default function Contact() {
                                 <Form.Control as="textarea" rows={5} ref={bodyInput} required />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit" onClick={submitContactUsForm}>
+                            <Button variant="primary" type="submit">
                                 Send Message
                             </Button>
                         </Form>

@@ -13,7 +13,8 @@ export default function Home() {
                 setHomeContent(response.data.data);
             })
             .catch(function (error) {
-                console.log(error);
+                // we can add some logging mechanism to report the error
+                console.log('Error : Can not load data !');
             });
     }, [])
 

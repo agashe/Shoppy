@@ -17,16 +17,15 @@ import {
     faRightFromBracket,
     faUser as faUserLoggedIn
 } from '@fortawesome/free-solid-svg-icons'
-import { faUser as faUserLoggedOut } from '@fortawesome/free-regular-svg-icons'
-import { useState, useRef } from 'react';
-import { default as axios } from 'axios';
+import { faUser as faUserNotLoggedIn } from '@fortawesome/free-regular-svg-icons'
+import { useRef } from 'react';
 
 export default function Header() {
     const keywordInput = useRef();
+    const userIsLoggedIn = (localStorage.getItem('user') !== null);
 
     function search(e) {
         e.preventDefault();
-
         window.location.href = "/products/s/" + keywordInput.current.value;
     }
 
@@ -35,6 +34,12 @@ export default function Header() {
             e.preventDefault();
             window.location.href = "/products/s/" + keywordInput.current.value;
         }
+    }
+
+    function signOut(e) {
+        e.preventDefault();
+        localStorage.removeItem('user');
+        window.location.href = '/';
     }
 
     return (
@@ -68,15 +73,24 @@ export default function Header() {
                             <FontAwesomeIcon icon={faCartShopping} />
                             <span className="cart-counter"></span>
                         </Nav.Link>
-                        <Nav.Link href="/sign-in" className="text-light">
-                            <FontAwesomeIcon icon={faUserLoggedOut} />
-                        </Nav.Link>
-                        <Nav.Link href="/orders" className="text-light">
-                            <FontAwesomeIcon icon={faList} />
-                        </Nav.Link>
-                        <Nav.Link href="/sign-out" className="text-light">
-                            <FontAwesomeIcon icon={faRightFromBracket} />
-                        </Nav.Link>
+                        {
+                            userIsLoggedIn ?
+                            <>
+                                <Nav.Link href="/profile" className="text-light">
+                                    <FontAwesomeIcon icon={faUserLoggedIn} />
+                                </Nav.Link>
+                                <Nav.Link href="/orders" className="text-light">
+                                    <FontAwesomeIcon icon={faList} />
+                                </Nav.Link>
+                                <Nav.Link className="text-light" onClick={signOut}>
+                                    <FontAwesomeIcon icon={faRightFromBracket} />
+                                </Nav.Link>
+                            </>
+                            :
+                            <Nav.Link href="/sign-in" className="text-light">
+                                <FontAwesomeIcon icon={faUserNotLoggedIn} />
+                            </Nav.Link>
+                        }
                     </Nav>
                 </Container>
             </Navbar>

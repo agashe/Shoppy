@@ -12,7 +12,8 @@ export default function About() {
                 setAboutContent(parse(response.data.data));
             })
             .catch(function (error) {
-                console.log(error);
+                // we can add some logging mechanism to report the error
+                console.log('Error : Can not load data !');
             });
     }, [])
 
