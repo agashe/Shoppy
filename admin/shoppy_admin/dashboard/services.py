@@ -1,4 +1,5 @@
 from django_grpc_framework import generics
+from django.core.paginator import Paginator
 from dashboard.api.home_pb2 import *
 from dashboard.api.users_pb2 import *
 from dashboard.api.products_pb2 import *
@@ -127,15 +128,17 @@ class ProductsService(generics.ModelService):
         per_page = 12
 
         if request.category_id != 0:            
-            products = Product.objects.filter(category__pk=request.category_id)[request.page:request.page+per_page]
+            products = Product.objects.filter(category__pk=request.category_id)
         elif request.search_keyword != '':
-            products = Product.objects.all().filter(name__icontains=urllib.parse.unquote(request.search_keyword))[request.page:request.page+per_page]
+            products = Product.objects.all().filter(name__icontains=urllib.parse.unquote(request.search_keyword))
         else:
-            products = Product.objects.all()[request.page:request.page+per_page]
+            products = Product.objects.all()
+
+        products_pages = Paginator(products, per_page)
+        products_list = products_pages.page(request.page)
+        products_serializer = ProductSerializer(products_list.object_list, many=True)
 
         categories = Category.objects.all()
-
-        products_serializer = ProductSerializer(products, many=True)
         categories_serializer = CategorySerializer(categories, many=True)
 
         if len(products) > per_page:
@@ -147,7 +150,7 @@ class ProductsService(generics.ModelService):
             data=ProductsPageData(
                 products=products_serializer.message,
                 categories=categories_serializer.message,
-                pages=pages
+                pages=products_pages.num_pages
             )
         )
 
@@ -165,24 +168,28 @@ class OrdersService(generics.ModelService):
     def FetchOrders(self, request, context):
         pages = 1
         per_page = 10
-        
-        orders = Order.objects.filter(user__pk=request.user_id)[request.page:request.page+per_page]
-        orders_serializer = OrderProtoSerializer(orders, many=True)
 
-        if len(orders) > per_page:
-            pages = (math.ceil(len(orders) / per_page))
+        orders = Order.objects.filter(user__pk=request.user_id).order_by('-created_at')
+        orders_pages = Paginator(orders, per_page)
+
+        orders_list = orders_pages.page(request.page)
+        orders_serializer = OrderProtoSerializer(orders_list.object_list, many=True)
 
         return FetchOrdersResponse(
             status=True,
             message="Orders list was loaded successfully !",
             data=OrdersPageData(
                 orders=orders_serializer.message,
-                pages=pages
+                pages=orders_pages.num_pages
             )
         )
 
     def FetchOrder(self, request, context):
-        order = Order.objects.get(user__pk=request.user_id, pk=request.order_id)
+        try:
+            order = Order.objects.get(user__pk=request.user_id, code=request.code)
+        except Order.DoesNotExist:
+            order = None
+
         orders_serializer = OrderProtoSerializer(order)
 
         return FetchOrderResponse(
@@ -195,8 +202,10 @@ class OrdersService(generics.ModelService):
         items = json.loads(request.items)
 
         total = 0
+        quantity = 0
         for item in items:
-            total += float(item['price'])
+            total += (float(item['price']) * int(item['quantity']))
+            quantity += int(item['quantity'])
         
         user = User.objects.get(pk=request.user_id)
 
@@ -204,7 +213,7 @@ class OrdersService(generics.ModelService):
             code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6)),
             user = user,
             total = total,
-            items_count = len(items),
+            items_count = quantity,
             items = request.items
         )
         
@@ -214,4 +223,15 @@ class OrdersService(generics.ModelService):
             status=True,
             message="Order was created successfully !",
             data=orders_serializer.message
+        )
+
+    def CancelOrder(self, request, context):
+        order = Order.objects.get(user__pk=request.user_id, code=request.code)
+        order.status = 'cancelled'
+        order.save()
+
+        return CancelOrderResponse(
+            status=True,
+            message="Order was cancelled successfully !",
+            data=""
         )

@@ -41,7 +41,7 @@ root.render(
                     <Route path="/product/:id/:slug?" element={<ShowProduct />} />
 
                     <Route path="/orders" element={<OrdersList />} />
-                    <Route path="/order" element={<ShowOrder />} />
+                    <Route path="/order/:code" element={<ShowOrder />} />
 
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/cart" element={<Cart />} />

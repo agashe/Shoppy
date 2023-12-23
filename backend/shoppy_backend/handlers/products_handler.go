@@ -9,9 +9,10 @@ import (
 
 func Products(context *fiber.Ctx) error {
 	page := 1
+	parameters := context.Queries()
 
-	if context.Params("page") != "nil" {
-		page, _ = strconv.Atoi(context.Params("page"))
+	if parameters["page"] != "nil" {
+		page, _ = strconv.Atoi(parameters["page"])
 	}
 
 	switch context.Params("operation") {

@@ -1,5 +1,5 @@
 import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { default as axios } from 'axios';
 
 export default function Profile() {
@@ -22,6 +22,7 @@ export default function Profile() {
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [show, setShow] = useState(true);
+    const [submitDisabled, setSubmitDisabled] = useState(false);
 
     useEffect(function() {
         axios.get('/users/profile', {
@@ -38,13 +39,13 @@ export default function Profile() {
                 // we can add some logging mechanism to report the error
                 console.log('Error : Can not load data !');
             });
-    }, [])
+    }, [user])
 
     function submitUpdateProfileForm(e) {
+        setSubmitDisabled(true);
         e.preventDefault();
         
         const form = e.currentTarget;
-
         if (form.checkValidity() === false) {
             e.stopPropagation();
             
@@ -52,12 +53,13 @@ export default function Profile() {
             setConfirmInput('');
             setCurrentInput('');
             setValidated(true);
+            setSubmitDisabled(false);
 
             return;
         }
 
         // check update password fields
-        if ((passwordInput != '') || (confirmInput != '') || (currentInput != '')) {
+        if ((passwordInput !== '') || (confirmInput !== '') || (currentInput !== '')) {
             if (!(passwordInput && confirmInput && currentInput)) {
                 e.stopPropagation();
                 alert('Invalid password , please enter all required fields !');
@@ -65,6 +67,7 @@ export default function Profile() {
                 setPasswordInput('');
                 setConfirmInput('');
                 setCurrentInput('');
+                setSubmitDisabled(false);
                 
                 return;
             }
@@ -99,6 +102,7 @@ export default function Profile() {
                 localStorage.setItem('user', JSON.stringify(user));
 
                 // show success message
+                setShow(true);
                 setMessage(response.data.message);
                 setMessageType('success');
             })
@@ -112,6 +116,9 @@ export default function Profile() {
                 // show error message
                 setMessage(error.response.data.message);
                 setMessageType('danger');
+            })
+            .finally(function () {
+                setSubmitDisabled(false);
             });
     }
 
@@ -123,7 +130,7 @@ export default function Profile() {
 
                 {
                     message &&
-                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                    <Alert variant={messageType} onClose={() => setShow(false)} show={show} dismissible>
                         {message}
                     </Alert>
                 }
@@ -166,7 +173,7 @@ export default function Profile() {
 
                             <Row>
                                 <Col className="w-100">
-                                    <Button variant="primary" type="submit" className="d-block mx-auto">
+                                    <Button variant="primary" type="submit" className="d-block mx-auto" disabled={submitDisabled}>
                                         Update
                                     </Button>
                                 </Col>

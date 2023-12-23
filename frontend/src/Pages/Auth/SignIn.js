@@ -9,14 +9,19 @@ export default function SignIn() {
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [show, setShow] = useState(true);
+    const [submitDisabled, setSubmitDisabled] = useState(false);
     
     function submitSignInForm(e) {
-        const form = e.currentTarget;
+        setSubmitDisabled(true);
 
+        const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
             e.stopPropagation();
+
             setValidated(true);
+            setSubmitDisabled(false);
+            
             return;
         }
 
@@ -35,6 +40,9 @@ export default function SignIn() {
 
                 setMessage(error.response.data.message);
                 setMessageType('danger');
+            })
+            .finally(function () {
+                setSubmitDisabled(false);
             });
     }
 
@@ -45,7 +53,7 @@ export default function SignIn() {
 
                 {
                     message &&
-                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                    <Alert variant={messageType} onClose={() => setShow(false)} show={show} dismissible>
                         {message}
                     </Alert>
                 }
@@ -67,7 +75,7 @@ export default function SignIn() {
                                 Don't have account yet , register !
                             </a>
 
-                            <Button variant="primary" type="submit" className="w-100">
+                            <Button variant="primary" type="submit" className="w-100" disabled={submitDisabled}>
                                 Let me in
                             </Button>
                         </Form>

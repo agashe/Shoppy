@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export default function List() {
     const [productsPageContent, setProductsPageContent] = useState([]);
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams] = useSearchParams();
     const { op, arg, slug } = useParams();
     let currentPage = searchParams.get('page') ?? 1;
 
@@ -19,7 +19,7 @@ export default function List() {
                 setProductsPageContent(response.data.data);
 
                 // add search keyword
-                if (op == 's') {
+                if (op === 's') {
                     document.getElementById('search-box').value = arg;
                 }
             })
@@ -27,13 +27,13 @@ export default function List() {
                 // we can add some logging mechanism to report the error
                 console.log('Error : Can not load data !');
             });
-    }, [])
+    }, [op, arg, slug, currentPage]);
 
     return (
         <>
             <Row>
                 <Col md="3">
-                    <CategoriesList categories={productsPageContent.categories} activeCategory={op == 'c' ? arg : ''} />
+                    <CategoriesList categories={productsPageContent.categories} activeCategory={op === 'c' ? arg : ''} />
                 </Col>
                 <Col md="9">
                     {
@@ -61,7 +61,7 @@ export default function List() {
                         productsPageContent.products &&
                         <Row>
                             <Col>
-                                <ItemsPagination url={`/products/${op}/${arg}/${slug}`} pages={[1]} currentPage={1} />
+                                <ItemsPagination url={`/products/${op}/${arg}/${slug}`} pages={[...Array(productsPageContent.pages).keys()]} currentPage={currentPage} />
                             </Col>
                         </Row>
                     }

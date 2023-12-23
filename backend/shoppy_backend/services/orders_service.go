@@ -37,7 +37,7 @@ func FetchOrders(userId int32, page int32) *pb.FetchOrdersResponse {
 	return response
 }
 
-func FetchOrder(userId int32, orderId int32) *pb.FetchOrderResponse {
+func FetchOrder(userId int32, code string) *pb.FetchOrderResponse {
 	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {
@@ -52,8 +52,8 @@ func FetchOrder(userId int32, orderId int32) *pb.FetchOrderResponse {
 	defer cancel()
 
 	response, err := client.FetchOrder(ctx, &pb.FetchOrderRequest{
-		UserId:  userId,
-		OrderId: orderId,
+		UserId: userId,
+		Code:   code,
 	})
 
 	if err != nil {
@@ -80,6 +80,32 @@ func CreateOrder(userId int32, items string) *pb.CreateOrderResponse {
 	response, err := client.CreateOrder(ctx, &pb.CreateOrderRequest{
 		UserId: userId,
 		Items:  items,
+	})
+
+	if err != nil {
+		log.Fatalf("could not fetch: %v", err)
+	}
+
+	return response
+}
+
+func CancelOrder(userId int32, code string) *pb.CancelOrderResponse {
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+
+	defer conn.Close()
+
+	client := pb.NewOrdersOperationsClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+
+	response, err := client.CancelOrder(ctx, &pb.CancelOrderRequest{
+		UserId: userId,
+		Code:   code,
 	})
 
 	if err != nil {

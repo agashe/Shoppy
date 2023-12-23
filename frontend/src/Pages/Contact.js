@@ -11,14 +11,19 @@ export default function Contact() {
     const [validated, setValidated] = useState(false);
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
+    const [submitDisabled, setSubmitDisabled] = useState(false);
 
     function submitContactUsForm(e) {
-        const form = e.currentTarget;
+        setSubmitDisabled(true);
 
+        const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
             e.stopPropagation();
+
             setValidated(true);
+            setSubmitDisabled(false);
+            
             return;
         }
 
@@ -44,6 +49,9 @@ export default function Contact() {
                 // show error message
                 setMessage(error.response.data.message);
                 setMessageType('danger');
+            })
+            .finally(function () {
+                setSubmitDisabled(false);
             });
     }
     
@@ -55,7 +63,7 @@ export default function Contact() {
 
                 {
                     message &&
-                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                    <Alert variant={messageType} onClose={() => setShow(false)} show={show} dismissible>
                         {message}
                     </Alert>
                 }
@@ -79,7 +87,7 @@ export default function Contact() {
                                 <Form.Control as="textarea" rows={5} ref={bodyInput} required />
                             </Form.Group>
 
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" disabled={submitDisabled}>
                                 Send Message
                             </Button>
                         </Form>

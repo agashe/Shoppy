@@ -31,6 +31,11 @@ class OrdersOperationsStub(object):
                 request_serializer=orders__pb2.CreateOrderRequest.SerializeToString,
                 response_deserializer=orders__pb2.CreateOrderResponse.FromString,
                 )
+        self.CancelOrder = channel.unary_unary(
+                '/shoppy_backend.OrdersOperations/CancelOrder',
+                request_serializer=orders__pb2.CancelOrderRequest.SerializeToString,
+                response_deserializer=orders__pb2.CancelOrderResponse.FromString,
+                )
 
 
 class OrdersOperationsServicer(object):
@@ -56,6 +61,12 @@ class OrdersOperationsServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CancelOrder(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_OrdersOperationsServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +84,11 @@ def add_OrdersOperationsServicer_to_server(servicer, server):
                     servicer.CreateOrder,
                     request_deserializer=orders__pb2.CreateOrderRequest.FromString,
                     response_serializer=orders__pb2.CreateOrderResponse.SerializeToString,
+            ),
+            'CancelOrder': grpc.unary_unary_rpc_method_handler(
+                    servicer.CancelOrder,
+                    request_deserializer=orders__pb2.CancelOrderRequest.FromString,
+                    response_serializer=orders__pb2.CancelOrderResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -134,5 +150,22 @@ class OrdersOperations(object):
         return grpc.experimental.unary_unary(request, target, '/shoppy_backend.OrdersOperations/CreateOrder',
             orders__pb2.CreateOrderRequest.SerializeToString,
             orders__pb2.CreateOrderResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CancelOrder(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/shoppy_backend.OrdersOperations/CancelOrder',
+            orders__pb2.CancelOrderRequest.SerializeToString,
+            orders__pb2.CancelOrderResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

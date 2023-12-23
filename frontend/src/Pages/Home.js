@@ -16,7 +16,7 @@ export default function Home() {
                 // we can add some logging mechanism to report the error
                 console.log('Error : Can not load data !');
             });
-    }, [])
+    }, []);
 
     return (
         <>
@@ -24,13 +24,13 @@ export default function Home() {
                 <Col>
                     <Carousel data-bs-theme="dark">
                         <Carousel.Item>
-                            <img src="images/banners/shop-banner-1.png" alt="Shopping Banner" className="bg-background h-100 w-100 img-fluid" />
+                            <img src="images/banners/shop-banner-1.png" alt="Shopping Banner #1" className="bg-background h-100 w-100 img-fluid" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img src="images/banners/shop-banner-2.png" alt="Shopping Banner" className="bg-background h-100 w-100 img-fluid" />
+                            <img src="images/banners/shop-banner-2.png" alt="Shopping Banner #2" className="bg-background h-100 w-100 img-fluid" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img src="images/banners/shop-banner-3.png" alt="Shopping Banner" className="bg-background h-100 w-100 img-fluid" />
+                            <img src="images/banners/shop-banner-3.png" alt="Shopping Banner #3" className="bg-background h-100 w-100 img-fluid" />
                         </Carousel.Item>
                     </Carousel>
                 </Col>

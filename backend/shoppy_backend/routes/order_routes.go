@@ -11,6 +11,7 @@ func OrderRoutes(app *fiber.App, prefix string) {
 	routes := app.Group(prefix)
 
 	routes.Get("/orders", handlers.ListOrders)
-	routes.Get("/orders/:id", handlers.ShowOrder)
+	routes.Get("/orders/:code", handlers.ShowOrder)
 	routes.Post("/orders", handlers.CreateOrder)
+	routes.Delete("/orders/:code", handlers.CancelOrder)
 }

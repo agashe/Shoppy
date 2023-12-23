@@ -13,9 +13,9 @@ export default function ItemsPagination({ url, pages, currentPage }) {
                         {
                             pages.map((page, i) => {
                                 return (
-                                    <Pagination.Item key={i} href={`${url}?page=${page}`}
-                                        active={currentPage && (currentPage == page)}>
-                                        {page}
+                                    <Pagination.Item key={i} href={`${url}?page=${(page + 1)}`}
+                                        active={currentPage && (parseInt(currentPage) === (page + 1))}>
+                                        {(page + 1)}
                                     </Pagination.Item>
                                 );
                             })

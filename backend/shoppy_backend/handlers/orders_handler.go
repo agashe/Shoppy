@@ -15,7 +15,14 @@ func ListOrders(context *fiber.Ctx) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	// get user's orders
-	response := services.FetchOrders(int32(claims["id"].(float64)), 1)
+	page := 1
+	parameters := context.Queries()
+
+	if parameters["page"] != "nil" {
+		page, _ = strconv.Atoi(parameters["page"])
+	}
+
+	response := services.FetchOrders(int32(claims["id"].(float64)), int32(page))
 
 	// response
 	return context.JSON(fiber.Map{
@@ -31,13 +38,7 @@ func ShowOrder(context *fiber.Ctx) error {
 	claims := user.Claims.(jwt.MapClaims)
 
 	// get user's order
-	orderId := 0
-
-	if context.Params("order_id") != "nil" {
-		orderId, _ = strconv.Atoi(context.Params("id"))
-	}
-
-	response := services.FetchOrder(int32(claims["id"].(float64)), int32(orderId))
+	response := services.FetchOrder(int32(claims["id"].(float64)), context.Params("code"))
 
 	// response
 	return context.JSON(fiber.Map{
@@ -54,6 +55,22 @@ func CreateOrder(context *fiber.Ctx) error {
 
 	// create user's order
 	response := services.CreateOrder(int32(claims["id"].(float64)), string(context.Body()))
+
+	// response
+	return context.JSON(fiber.Map{
+		"status":  response.GetStatus(),
+		"message": response.GetMessage(),
+		"data":    response.GetData(),
+	})
+}
+
+func CancelOrder(context *fiber.Ctx) error {
+	// get user's claims
+	user := context.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+
+	// cancel user's order
+	response := services.CancelOrder(int32(claims["id"].(float64)), context.Params("code"))
 
 	// response
 	return context.JSON(fiber.Map{

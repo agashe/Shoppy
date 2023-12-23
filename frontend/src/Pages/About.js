@@ -15,7 +15,7 @@ export default function About() {
                 // we can add some logging mechanism to report the error
                 console.log('Error : Can not load data !');
             });
-    }, [])
+    }, []);
 
     return (
         <Row>

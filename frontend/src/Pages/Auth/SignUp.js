@@ -13,14 +13,19 @@ export default function SignUp() {
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
     const [show, setShow] = useState(true);
+    const [submitDisabled, setSubmitDisabled] = useState(false);
 
     function submitSignUpForm(e) {
-        const form = e.currentTarget;
+        setSubmitDisabled(true);
 
+        const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
             e.stopPropagation();
+
             setValidated(true);
+            setSubmitDisabled(false);
+
             return;
         }
         
@@ -42,6 +47,9 @@ export default function SignUp() {
 
                 setMessage(error.response.data.message);
                 setMessageType('danger');
+            })
+            .finally(function () {
+                setSubmitDisabled(false);
             });
     }
 
@@ -53,7 +61,7 @@ export default function SignUp() {
 
                 {
                     message &&
-                    <Alert variant={messageType} onClose={() => setShow(false)} dismissible>
+                    <Alert variant={messageType} onClose={() => setShow(false)} show={show} dismissible>
                         {message}
                     </Alert>
                 }
@@ -90,7 +98,7 @@ export default function SignUp() {
 
                             <Row>
                                 <Col className="w-100">
-                                    <Button variant="primary" type="submit" className="d-block mx-auto">
+                                    <Button variant="primary" type="submit" className="d-block mx-auto" disabled={submitDisabled}>
                                         Register
                                     </Button>
                                 </Col>

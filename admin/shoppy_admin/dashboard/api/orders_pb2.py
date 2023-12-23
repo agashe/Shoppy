@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0corders.proto\x12\x0eshoppy_backend\"\x90\x01\n\tOrderData\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\t\x12\r\n\x05total\x18\x03 \x01(\x02\x12\x13\n\x0bitems_count\x18\x04 \x01(\x05\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x12\n\nshipped_at\x18\x06 \x01(\t\x12\x12\n\ncreated_at\x18\x07 \x01(\t\x12\r\n\x05items\x18\x08 \x01(\t\"J\n\x0eOrdersPageData\x12)\n\x06orders\x18\x01 \x03(\x0b\x32\x19.shoppy_backend.OrderData\x12\r\n\x05pages\x18\x02 \x01(\x05\"3\n\x12\x46\x65tchOrdersRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x0c\n\x04page\x18\x02 \x01(\x05\"6\n\x11\x46\x65tchOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x10\n\x08order_id\x18\x02 \x01(\x05\"4\n\x12\x43reateOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\r\n\x05items\x18\x02 \x01(\t\"d\n\x13\x46\x65tchOrdersResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12,\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1e.shoppy_backend.OrdersPageData\"^\n\x12\x46\x65tchOrderResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.shoppy_backend.OrderData\"_\n\x13\x43reateOrderResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.shoppy_backend.OrderData2\x9d\x02\n\x10OrdersOperations\x12X\n\x0b\x46\x65tchOrders\x12\".shoppy_backend.FetchOrdersRequest\x1a#.shoppy_backend.FetchOrdersResponse\"\x00\x12U\n\nFetchOrder\x12!.shoppy_backend.FetchOrderRequest\x1a\".shoppy_backend.FetchOrderResponse\"\x00\x12X\n\x0b\x43reateOrder\x12\".shoppy_backend.CreateOrderRequest\x1a#.shoppy_backend.CreateOrderResponse\"\x00\x42\x04Z\x02./b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0corders.proto\x12\x0eshoppy_backend\"\x90\x01\n\tOrderData\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\t\x12\r\n\x05total\x18\x03 \x01(\x02\x12\x13\n\x0bitems_count\x18\x04 \x01(\x05\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x12\n\nshipped_at\x18\x06 \x01(\t\x12\x12\n\ncreated_at\x18\x07 \x01(\t\x12\r\n\x05items\x18\x08 \x01(\t\"J\n\x0eOrdersPageData\x12)\n\x06orders\x18\x01 \x03(\x0b\x32\x19.shoppy_backend.OrderData\x12\r\n\x05pages\x18\x02 \x01(\x05\"3\n\x12\x46\x65tchOrdersRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x0c\n\x04page\x18\x02 \x01(\x05\"2\n\x11\x46\x65tchOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\t\"4\n\x12\x43reateOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\r\n\x05items\x18\x02 \x01(\t\"3\n\x12\x43\x61ncelOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x05\x12\x0c\n\x04\x63ode\x18\x02 \x01(\t\"d\n\x13\x46\x65tchOrdersResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12,\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1e.shoppy_backend.OrdersPageData\"^\n\x12\x46\x65tchOrderResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.shoppy_backend.OrderData\"_\n\x13\x43reateOrderResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.shoppy_backend.OrderData\"D\n\x13\x43\x61ncelOrderResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\t2\xf7\x02\n\x10OrdersOperations\x12X\n\x0b\x46\x65tchOrders\x12\".shoppy_backend.FetchOrdersRequest\x1a#.shoppy_backend.FetchOrdersResponse\"\x00\x12U\n\nFetchOrder\x12!.shoppy_backend.FetchOrderRequest\x1a\".shoppy_backend.FetchOrderResponse\"\x00\x12X\n\x0b\x43reateOrder\x12\".shoppy_backend.CreateOrderRequest\x1a#.shoppy_backend.CreateOrderResponse\"\x00\x12X\n\x0b\x43\x61ncelOrder\x12\".shoppy_backend.CancelOrderRequest\x1a#.shoppy_backend.CancelOrderResponse\"\x00\x42\x04Z\x02./b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -29,15 +29,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_FETCHORDERSREQUEST']._serialized_start=255
   _globals['_FETCHORDERSREQUEST']._serialized_end=306
   _globals['_FETCHORDERREQUEST']._serialized_start=308
-  _globals['_FETCHORDERREQUEST']._serialized_end=362
-  _globals['_CREATEORDERREQUEST']._serialized_start=364
-  _globals['_CREATEORDERREQUEST']._serialized_end=416
-  _globals['_FETCHORDERSRESPONSE']._serialized_start=418
-  _globals['_FETCHORDERSRESPONSE']._serialized_end=518
-  _globals['_FETCHORDERRESPONSE']._serialized_start=520
-  _globals['_FETCHORDERRESPONSE']._serialized_end=614
-  _globals['_CREATEORDERRESPONSE']._serialized_start=616
-  _globals['_CREATEORDERRESPONSE']._serialized_end=711
-  _globals['_ORDERSOPERATIONS']._serialized_start=714
-  _globals['_ORDERSOPERATIONS']._serialized_end=999
+  _globals['_FETCHORDERREQUEST']._serialized_end=358
+  _globals['_CREATEORDERREQUEST']._serialized_start=360
+  _globals['_CREATEORDERREQUEST']._serialized_end=412
+  _globals['_CANCELORDERREQUEST']._serialized_start=414
+  _globals['_CANCELORDERREQUEST']._serialized_end=465
+  _globals['_FETCHORDERSRESPONSE']._serialized_start=467
+  _globals['_FETCHORDERSRESPONSE']._serialized_end=567
+  _globals['_FETCHORDERRESPONSE']._serialized_start=569
+  _globals['_FETCHORDERRESPONSE']._serialized_end=663
+  _globals['_CREATEORDERRESPONSE']._serialized_start=665
+  _globals['_CREATEORDERRESPONSE']._serialized_end=760
+  _globals['_CANCELORDERRESPONSE']._serialized_start=762
+  _globals['_CANCELORDERRESPONSE']._serialized_end=830
+  _globals['_ORDERSOPERATIONS']._serialized_start=833
+  _globals['_ORDERSOPERATIONS']._serialized_end=1208
 # @@protoc_insertion_point(module_scope)

@@ -9,6 +9,7 @@ export default function StatusBadge({ status }) {
     };
 
     return (
-        <Badge bg={ badgeTypes[status] } className="p-2">{ status }</Badge>
+        status &&
+        <Badge bg={ badgeTypes[status] } className="p-2">{status.charAt(0).toUpperCase() + status.slice(1)}</Badge>
     );
 }

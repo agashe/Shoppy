@@ -42,12 +42,12 @@ class FetchOrdersRequest(_message.Message):
     def __init__(self, user_id: _Optional[int] = ..., page: _Optional[int] = ...) -> None: ...
 
 class FetchOrderRequest(_message.Message):
-    __slots__ = ("user_id", "order_id")
+    __slots__ = ("user_id", "code")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
-    ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    CODE_FIELD_NUMBER: _ClassVar[int]
     user_id: int
-    order_id: int
-    def __init__(self, user_id: _Optional[int] = ..., order_id: _Optional[int] = ...) -> None: ...
+    code: str
+    def __init__(self, user_id: _Optional[int] = ..., code: _Optional[str] = ...) -> None: ...
 
 class CreateOrderRequest(_message.Message):
     __slots__ = ("user_id", "items")
@@ -56,6 +56,14 @@ class CreateOrderRequest(_message.Message):
     user_id: int
     items: str
     def __init__(self, user_id: _Optional[int] = ..., items: _Optional[str] = ...) -> None: ...
+
+class CancelOrderRequest(_message.Message):
+    __slots__ = ("user_id", "code")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    user_id: int
+    code: str
+    def __init__(self, user_id: _Optional[int] = ..., code: _Optional[str] = ...) -> None: ...
 
 class FetchOrdersResponse(_message.Message):
     __slots__ = ("status", "message", "data")
@@ -86,3 +94,13 @@ class CreateOrderResponse(_message.Message):
     message: str
     data: OrderData
     def __init__(self, status: bool = ..., message: _Optional[str] = ..., data: _Optional[_Union[OrderData, _Mapping]] = ...) -> None: ...
+
+class CancelOrderResponse(_message.Message):
+    __slots__ = ("status", "message", "data")
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    status: bool
+    message: str
+    data: str
+    def __init__(self, status: bool = ..., message: _Optional[str] = ..., data: _Optional[str] = ...) -> None: ...

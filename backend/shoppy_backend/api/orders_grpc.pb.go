@@ -25,6 +25,7 @@ type OrdersOperationsClient interface {
 	FetchOrders(ctx context.Context, in *FetchOrdersRequest, opts ...grpc.CallOption) (*FetchOrdersResponse, error)
 	FetchOrder(ctx context.Context, in *FetchOrderRequest, opts ...grpc.CallOption) (*FetchOrderResponse, error)
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
 }
 
 type ordersOperationsClient struct {
@@ -62,6 +63,15 @@ func (c *ordersOperationsClient) CreateOrder(ctx context.Context, in *CreateOrde
 	return out, nil
 }
 
+func (c *ordersOperationsClient) CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error) {
+	out := new(CancelOrderResponse)
+	err := c.cc.Invoke(ctx, "/shoppy_backend.OrdersOperations/CancelOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrdersOperationsServer is the server API for OrdersOperations service.
 // All implementations must embed UnimplementedOrdersOperationsServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type OrdersOperationsServer interface {
 	FetchOrders(context.Context, *FetchOrdersRequest) (*FetchOrdersResponse, error)
 	FetchOrder(context.Context, *FetchOrderRequest) (*FetchOrderResponse, error)
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
+	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
 	mustEmbedUnimplementedOrdersOperationsServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedOrdersOperationsServer) FetchOrder(context.Context, *FetchOrd
 }
 func (UnimplementedOrdersOperationsServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
+}
+func (UnimplementedOrdersOperationsServer) CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelOrder not implemented")
 }
 func (UnimplementedOrdersOperationsServer) mustEmbedUnimplementedOrdersOperationsServer() {}
 
@@ -152,6 +166,24 @@ func _OrdersOperations_CreateOrder_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrdersOperations_CancelOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrdersOperationsServer).CancelOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shoppy_backend.OrdersOperations/CancelOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrdersOperationsServer).CancelOrder(ctx, req.(*CancelOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrdersOperations_ServiceDesc is the grpc.ServiceDesc for OrdersOperations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var OrdersOperations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateOrder",
 			Handler:    _OrdersOperations_CreateOrder_Handler,
+		},
+		{
+			MethodName: "CancelOrder",
+			Handler:    _OrdersOperations_CancelOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
