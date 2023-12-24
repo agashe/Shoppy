@@ -2,11 +2,21 @@ import { Row, Col, Table, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import StatusBadge from '../../Components/StatusBadge';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { default as axios } from 'axios';
 import { useParams } from 'react-router';
 
 export default function Show() {
+    useLayoutEffect(() => {
+        // check authentication
+        if (localStorage.getItem('user') === null || 
+            localStorage.getItem('user') === '' ||
+            localStorage.getItem('user') === false
+        ) {
+            window.location.href = '/sign-in';
+        }
+    }, []);
+
     const mediaURL = 'http://localhost:8000';
     const user = JSON.parse(localStorage.getItem('user'));
     const [orderPageContent, setOrderPageContent] = useState([]);

@@ -1,8 +1,18 @@
 import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { default as axios } from 'axios';
-import { useState, useRef } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 
 export default function SignIn() {
+    useLayoutEffect(() => {
+        // check authentication
+        if (localStorage.getItem('user') !== null &&
+            localStorage.getItem('user') !== '' &&
+            localStorage.getItem('user') !== false
+        ) {
+            window.location.href = '/';
+        }
+    }, []);
+
     const emailInput = useRef();
     const passwordInput = useRef();
     const [validated, setValidated] = useState(false);

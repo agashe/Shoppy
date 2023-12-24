@@ -46,14 +46,14 @@ class HomeService(generics.ModelService):
                 <br />
 
                 <article>
-                    A SQLite3 database is used for storing the data , this could be replaced with any other SQL
-                    database of your choice like MySQL , PostgreSQL or MSSQL.
+                    A MySQL database is used for storing the data , this could be replaced with any other SQL
+                    database of your choice like SQLite3 , PostgreSQL or MSSQL.
                 </article>
 
                 <br />
 
                 <article>
-                    For the installation instructions , check please the Github repo.
+                    For the installation instructions , check please the <a href="https://github.com/agashe/Shoppy">Github repo</a>.
                 </article>
             """
         )

@@ -1,8 +1,18 @@
 import { Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { default as axios } from 'axios';
 
 export default function Profile() {
+    useLayoutEffect(() => {
+        // check authentication
+        if (localStorage.getItem('user') === null || 
+            localStorage.getItem('user') === '' ||
+            localStorage.getItem('user') === false
+        ) {
+            window.location.href = '/sign-in';
+        }
+    }, []);
+
     const [nameInput, setNameInput] = useState('');
     const [emailInput, setEmailInput] = useState('');
     const [addressInput, setAddressInput] = useState('');

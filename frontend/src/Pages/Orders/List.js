@@ -3,11 +3,21 @@ import ItemsPagination from "../../Components/ItemsPagination";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import StatusBadge from '../../Components/StatusBadge';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { default as axios } from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
 export default function List() {
+    useLayoutEffect(() => {
+        // check authentication
+        if (localStorage.getItem('user') === null || 
+            localStorage.getItem('user') === '' ||
+            localStorage.getItem('user') === false
+        ) {
+            window.location.href = '/sign-in';
+        }
+    }, []);
+
     const user = JSON.parse(localStorage.getItem('user'));
     const [ordersPageContent, setOrdersPageContent] = useState([]);
     let [searchParams] = useSearchParams();

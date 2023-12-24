@@ -22,11 +22,7 @@ import { useRef } from 'react';
 
 export default function Header() {
     const keywordInput = useRef();
-    const userIsLoggedIn = (localStorage.getItem('user') !== null);
-    
-    
     let cart = JSON.parse(localStorage.getItem('cart'));
-    const cartIsNotEmpty = ((cart !== null) && (cart.length > 0));
 
     function search(e) {
         e.preventDefault();
@@ -75,10 +71,10 @@ export default function Header() {
                     <Nav className="text-light mx-2">
                         <Nav.Link href="/cart" className="text-light position-relative">
                             <FontAwesomeIcon icon={faCartShopping} />
-                            <span id="cart-counter-icon" className="cart-counter" style={{ display: (cartIsNotEmpty ? 'block' : 'none') }}></span>
+                            <span id="cart-counter-icon" className="cart-counter" style={{ display: (((cart !== null) && (cart.length > 0)) ? 'block' : 'none') }}></span>
                         </Nav.Link>
                         {
-                            userIsLoggedIn ?
+                            (localStorage.getItem('user') !== null) ?
                             <>
                                 <Nav.Link href="/profile" className="text-light">
                                     <FontAwesomeIcon icon={faUserLoggedIn} />
