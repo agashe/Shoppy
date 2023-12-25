@@ -1,0 +1,357 @@
+{
+    "info": {
+        "_postman_id": "46aeddcd-d86d-494a-a84f-98cc10019409",
+        "name": "Shoppy-APIs",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Home",
+            "item": [
+                {
+                    "name": "Index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/",
+                            "path": [
+                                ""
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "About",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/about",
+                            "host": [
+                                "about"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Contact",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/contact",
+                            "host": [
+                                "contact"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Othman\",\n  \"email\": \"fahd@example.com\",\n  \"body\": \"I CAN'T BELEVE MY EYES AGAIN\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Sign-In",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/auth/sign-in",
+                            "path": [
+                                "sign-in"
+                            ],
+                            "host": [
+                                "auth"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"ahmed@example.com\",\n  \"password\": \"12345678\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Sign-Up",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/auth/sign-up",
+                            "path": [
+                                "sign-up"
+                            ],
+                            "host": [
+                                "auth"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"yasser\",\n  \"email\": \"yasser5@example.com\",\n  \"password\": \"12345678abcAAAA\",\n  \"confirm\": \"12345678abcAAAA\",\n  \"address\": \"address\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update Profile",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "/users/profile",
+                            "path": [
+                                "profile"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"id\": 4,\n  \"name\": \"ahmed\",\n  \"email\": \"ahmed@example.com\",\n  \"address\": \"address 3\",\n  \"password\": \"\",\n  \"confirm\": \"\",\n  \"current\": \"\"\n}"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyB1cGRhdGVkIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzA3NDgwMywiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UO_GLezTrwSiTScaYEmHSzp2C3Z-xXvS8CwaOYV-IEM",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Profile",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/users/profile",
+                            "path": [
+                                "profile"
+                            ],
+                            "host": [
+                                "users"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyB1cGRhdGVkIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzA3NDgwMywiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UO_GLezTrwSiTScaYEmHSzp2C3Z-xXvS8CwaOYV-IEM",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orders",
+            "item": [
+                {
+                    "name": "Index",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/orders?page=1",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                }
+                            ],
+                            "variable": [],
+                            "host": [
+                                "orders"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyAyIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzE1ODg0NCwiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UFy4sxepj04cK5mgK_MOSFCq2Ik4CINhfREzoHg45nc",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Show",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/orders/ABC123",
+                            "path": [
+                                "ABC123"
+                            ],
+                            "host": [
+                                "orders"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyAyIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzE1ODg0NCwiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UFy4sxepj04cK5mgK_MOSFCq2Ik4CINhfREzoHg45nc",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "/orders",
+                            "host": [
+                                "orders"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "[{\"product_id\": \"1\", \"product_image\": \"The end of life\", \"product_name\": \"The end of life\", \"price\": \"10\", \"quantity\": \"1\"}]"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyAyIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzE1ODg0NCwiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UFy4sxepj04cK5mgK_MOSFCq2Ik4CINhfREzoHg45nc",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Cancel",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "/orders/GVQSVC",
+                            "path": [
+                                "GVQSVC"
+                            ],
+                            "host": [
+                                "orders"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiYWRkcmVzcyAyIiwiZW1haWwiOiJhaG1lZEBleGFtcGxlLmNvbSIsImV4cCI6MTcwMzE1ODg0NCwiaWQiOjQsIm5hbWUiOiJhaG1lZCJ9.UFy4sxepj04cK5mgK_MOSFCq2Ik4CINhfREzoHg45nc",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Show",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/products/p/1/test",
+                            "path": [
+                                "p",
+                                "1",
+                                "test"
+                            ],
+                            "host": [
+                                "products"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Search",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/products/s/phone",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "5",
+                                    "disabled": true
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "s",
+                                "phone"
+                            ],
+                            "host": [
+                                "products"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Category",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "/products/c/3/books?page=2",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "2"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "c",
+                                "3",
+                                "books"
+                            ],
+                            "host": [
+                                "products"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

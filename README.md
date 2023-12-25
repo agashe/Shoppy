@@ -1,6 +1,6 @@
 # Shoppy
 
-An eCommerce platform with all basic functionality (cart, inventory ..etc), the platform was built using a simple microservices architecture , consists of 2 services connected to each other using gRPC.
+An eCommerce platform with all basic functionality (cart, inventory ..etc), the platform was built using a simple microservices architecture , consists of 2 services connected to each other using gRPC protocol.
 
 Technologies used in these project including : 
 
@@ -189,7 +189,13 @@ For frontend : https://localhost:3000
 
 Now you can access the application in your browser by typing https://localhost:3000 , And also access the admin panel by visiting : https://localhost:8000/admin
 
+And also In case you wanted to test the APIs. You can find in the `collections/` directory 2 APIs collections , one for [Thunder Client](https://www.thunderclient.com/) (VS Code Extension) and the other one for [Postman](https://www.postman.com/).
+
 
 ## Notes
 
 Unfortunately the django-grpc-framework , currently has an issue with Django (version >=4) , [The issue](https://github.com/fengsp/django-grpc-framework/issues/42) is still not fixed , <ins>so you could use the solution in this [comment](https://github.com/fengsp/django-grpc-framework/issues/42#issuecomment-1545346306)</ins> , or just use another package as some users suggested [django-socio-grpc](https://django-socio-grpc.readthedocs.io/en/latest/).
+
+## License
+
+(Shoppy) released under the terms of the MIT license.
